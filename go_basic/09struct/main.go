@@ -48,11 +48,25 @@ func main() {
 	default:
 		fmt.Println("None")
 	}
+
+	hy := User{"a",12,"c",true}
+
+	hy.getStatus()
+	hy.getEmail()
 }
 
 type User struct {
 	Name    string
 	Age     int
-	Address string
+	Email string
 	Status  bool
+}
+
+func (u User) getStatus(){
+	fmt.Println("is status",u.Status)
+}
+
+func (u User) getEmail(){
+	u.Email = "test@gmail.com"
+	fmt.Println(u.Email)
 }
