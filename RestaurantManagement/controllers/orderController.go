@@ -1,0 +1,33 @@
+package controllers
+
+import (
+	"github.com/gin-gonic/gin"
+)
+
+
+func GetOrders() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Logic to get all orders
+	}
+}
+
+func GetOrderById() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Logic to get order by ID
+	}
+}
+func CreateOrder() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Logic to create a new order
+	}
+}
+func UpdateOrder() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Logic to update an existing order
+	}
+}
+func DeleteOrder() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Logic to delete an order
+	}
+}
