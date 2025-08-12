@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetInvoice() gin.HandlerFunc {
+func GetInvoices() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Logic to get all invoices
 	}
