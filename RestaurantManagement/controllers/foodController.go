@@ -6,7 +6,6 @@ import (
 	"restaurant-management/database"
 	"restaurant-management/models"
 	"time"
-
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -39,7 +38,7 @@ func GetFoodById() gin.HandlerFunc {
 }
 func CreateFood() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Logic to create a new food item
+		var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 	}
 }
 func UpdateFood() gin.HandlerFunc {
