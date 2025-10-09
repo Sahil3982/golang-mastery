@@ -1,4 +1,4 @@
-module github.com/sahil3982/s-api
+module github.com/sahil3982/students-api
 
 go 1.24.5
 

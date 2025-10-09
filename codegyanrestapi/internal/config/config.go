@@ -4,10 +4,11 @@ import (
 	"flag"
 	"log"
 	"os"
+	"github.com/ilyakaznacheev/cleanenv"
 )
 
 type HTTPServer struct {
-	Addr string
+	Addr string `yaml:"address" env-required:"true"`
 }
 type Config struct {
 	Env         string `yaml:"env" env:"ENV" env-required:"true" env-default:"production"`
@@ -21,10 +22,10 @@ func MustLoad() *Config {
 	configPath = os.Getenv("CONFIG_PATH")
 
 	if configPath == "" {
-		flag := flag.String("config", "", "path to config file")
+		configFlag := flag.String("config", "", "path to config file")
 		flag.Parse()
 
-		configPath = *flag
+		configPath = *configFlag
 
 		if configPath == "" {
 			panic("config path is not set")
@@ -37,7 +38,7 @@ func MustLoad() *Config {
 
 	var cfg Config
 
-	err := cleanenv.ReadCofig(configPath, &cfg)
+	err := cleanenv.ReadConfig(configPath, &cfg)
 
 	if err != nil {
 		log.Fatalf("failed to read config: %s", err.Error())
