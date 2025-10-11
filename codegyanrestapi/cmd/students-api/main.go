@@ -10,7 +10,9 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
 	"github.com/sahil3982/students-api/internal/config"
+	"github.com/sahil3982/students-api/internal/http/handlers/student"
 )
 
 func main() {
@@ -19,9 +21,7 @@ func main() {
 
 	// Setup router and routes
 	router := http.NewServeMux()
-	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello, World!"))
-	})
+	router.HandleFunc("POST /api/students", student.New() )
 
 	// Create server
 	server := http.Server{
