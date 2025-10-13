@@ -13,15 +13,26 @@ import (
 
 	"github.com/sahil3982/students-api/internal/config"
 	"github.com/sahil3982/students-api/internal/http/handlers/student"
+	"github.com/sahil3982/students-api/internal/storage/sqlite"
 )
 
 func main() {
 	// Load configuration
 	cfg := config.MustLoad()
 
+	//Database connection
+
+	storage, err := sqlite.New(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	slog.Info("Storage Intialized", slog.String("env", cfg.Env), slog.String("storage_path", cfg.StoragePath), slog.String("version", "1.0.0"))
+
 	// Setup router and routes
 	router := http.NewServeMux()
-	router.HandleFunc("POST /api/students", student.New() )
+	router.HandleFunc("POST /api/students", student.New(storage))
+	router.HandleFunc("GET /api/students/{id}", student.GetById(storage))
 
 	// Create server
 	server := http.Server{
