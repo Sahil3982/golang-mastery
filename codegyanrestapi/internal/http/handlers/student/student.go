@@ -7,6 +7,8 @@ import (
 	"io"
 	"log/slog"
 	"net/http"
+	"strconv"
+
 	"github.com/go-playground/validator/v10"
 	"github.com/sahil3982/students-api/internal/storage"
 	"github.com/sahil3982/students-api/internal/types"
@@ -44,6 +46,8 @@ func New(storage storage.Storage) http.HandlerFunc {
 			return
 		}
 
+		student.Id = lastId
+
 		response.WriteJson(w, http.StatusCreated, map[string]int64{
 			"id": lastId,
 		})
@@ -52,5 +56,30 @@ func New(storage storage.Storage) http.HandlerFunc {
 }
 
 func GetById(storage storage.Storage) http.HandlerFunc {
- fmt.Println("Get by id called")
+	return func(w http.ResponseWriter, r *http.Request) {
+		slog.Info("Get student by id called")
+		id := r.PathValue("id")
+
+		if id == "" {
+			response.WriteJson(w, http.StatusBadRequest, response.GeneralError(fmt.Errorf("id is required")))
+		}
+
+		intId, err := strconv.ParseInt(id, 10, 64)
+		if err != nil {
+			slog.Error("Error parsing id", slog.String("id", id), slog.String("error", err.Error()))
+			response.WriteJson(w, http.StatusBadRequest, response.GeneralError(fmt.Errorf("id must be a number")))
+			return
+		}
+
+		student, err := storage.GetStudentById(intId)
+
+		if err != nil {
+			slog.Error("Error getting student by id", slog.Int64("id", intId), slog.String("error", err.Error()))
+			response.WriteJson(w, http.StatusInternalServerError, response.GeneralError(err))
+			return
+		}
+
+		response.WriteJson(w, http.StatusOK, student)
+
+	}
 }
