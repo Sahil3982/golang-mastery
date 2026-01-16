@@ -7,5 +7,8 @@ import (
 func main() {
 	// internals.Goroutine()
 	// internals.Channel()
-	internals.Example()
+	// internals.Example()
+	// internals.WaitGroup()
+	// internals.Select()
+	internals.ECommerce()
 }
