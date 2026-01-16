@@ -2,8 +2,8 @@ package worker
 
 import (
 	"fmt"
-	"time"
 	"github.com/sahil3982/order-process/model"
+	"time"
 )
 
 func Process(workerID int, jobs <-chan model.Order, results chan<- string) {
