@@ -6,6 +6,6 @@ import (
 
 func main() {
 	// internals.Goroutine()
-	internals.Channel()
+	// internals.Channel()
 	internals.Example()
 }
